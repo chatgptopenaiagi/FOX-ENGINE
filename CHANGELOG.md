@@ -9,6 +9,10 @@ Initial experimental foundation for Falsification-Oriented eXploration.
   hypothesis relationships, architecture alternatives, evidence preservation,
   and scoped authority policy.
 - Add an agent-neutral Python SDK and versioned JSON lines integration.
+- Add optional externally trusted journal count/hash comparisons that detect
+  snapshot replacement and truncation; preserve unanchored integrity checks.
+- Fix annotation evaluation for Python 3.11 and verify the foundation on Windows
+  and Ubuntu with Python 3.11 and 3.14.
 - Document synthetic examples, CAE case attribution, security boundaries,
   continuity, and verification limitations.
 

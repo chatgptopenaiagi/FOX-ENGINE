@@ -77,3 +77,25 @@ within its declared support range, not an unsupported environment.
 Correction: postpone annotation evaluation in the strategies module. The original
 failed run remains public. A later passing 3.11 run is required to verify this
 correction; local Python 3.14 success alone is insufficient.
+
+## Verified portability correction and anchor increment
+
+[Run 38368299656](https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368299656)
+at commit `1226385bc13ec8d6c5928fb235c373c0de1de771` passed all four jobs:
+Windows and Ubuntu, each with Python 3.11 and 3.14. Each job reported 63 tests,
+OK, without skips; schema, source/wheel build and installed SDK checks also passed.
+This verifies the specific portability correction and bounded foundation suite.
+
+The next increment added optional trusted journal count/hash snapshots. Targeted
+evidence suite: 19 tests passed. Full local suite: **70 tests passed, 0 failures,
+0 skips**, exit 0. Seven new tests cover exact and empty anchors, malformed pairs,
+suffix and complete truncation, recomputed replacement, stale snapshots after
+legitimate growth, and no file creation. Independent code review found no
+substantive issues. Cross-platform results for this increment are recorded only
+after its own CI run completes.
+
+Publication checks before the foundation push inspected all 75 staged regular
+files, scanned their exact contents, reviewed synthetic/provenance constraints,
+and found no remaining secret/personal-data findings. GitHub confirmed PUBLIC
+visibility and the exact foundation and portability commit identities; ordinary
+pushes only, no release/tag publication. Later checkpoints repeat staged review.

@@ -52,3 +52,42 @@ does not create files, execute reproduction steps, or verify artifact contents.
 The SDK caller must enforce read authority for that path. In contrast, the
 standard-input/output `verify_evidence` operation only validates supplied records
 and their distinct identities; it takes no filesystem path.
+
+## Optional trusted snapshot comparison
+
+Both `verify_journal` and `EvidenceJournal.verify` accept the keyword arguments
+`expected_count` and `expected_head_hash`. Supply both together or omit both.
+The count must be a nonnegative integer; booleans and floating-point numbers are
+rejected. The head hash must be exactly 64 lowercase hexadecimal characters.
+For an empty journal, the anchor is count `0` and a hash of 64 zero characters.
+
+After verifying the complete journal's structure and chain, FOX compares its
+final record count and final entry hash with the supplied snapshot:
+
+```python
+# The host obtains these two values from its independently trusted checkpoint.
+records = journal.verify(
+    expected_count=trusted_count,
+    expected_head_hash=trusted_head_hash,
+)
+```
+
+`append` returns the new final entry hash. The host can retain that value and
+the known record count in a separately controlled checkpoint. FOX does not
+create, authenticate, publish, or update a trusted checkpoint automatically.
+Reading the final hash from the journal being inspected and immediately treating
+it as trusted provides no independent protection.
+
+A retained anchor detects suffix truncation and a replacement journal whose
+valid internal hashes were recomputed, provided the anchor itself remains
+trusted. This is an exact snapshot comparison: a legitimate later append also
+fails comparison with an older count. A mismatch means the journal differs
+from the expected snapshot; it does not by itself establish malicious activity.
+Malformed anchors or mismatches raise `EvidenceError`. Verification never
+repairs, truncates, or writes the journal, and valid anchors do not cause a
+missing journal to be created.
+
+Calls without anchors retain the original consistency-only behavior and cannot
+detect a valid shortened prefix or a fully recomputed replacement. Neither mode
+establishes observation truth, authorship, trusted time, artifact-byte integrity,
+or cryptographic immutability.

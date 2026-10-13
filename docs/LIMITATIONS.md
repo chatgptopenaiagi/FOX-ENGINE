@@ -14,8 +14,10 @@ agent's judgment.
   test, and real-world acceptance are different claims. None implies the others.
 - **Local evidence is editable.** Hashes detect some inconsistencies but do not
   prevent a privileged writer from replacing records and recomputing hashes.
-  Trusted timestamps, authenticated provenance, external anchors, and robust
-  concurrent/crash recovery need further design and validation.
+  Optional external count/hash comparisons detect differences from a retained
+  trusted snapshot. Authenticating and independently storing those anchors,
+  trusted timestamps, and robust concurrent/crash recovery remain host concerns
+  or future work.
 - **Authority checking is not isolation.** It does not stop a host from ignoring
   its result or eliminate filesystem races. No command executor or OS sandbox
   is supplied by the foundation.

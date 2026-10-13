@@ -86,13 +86,42 @@ def _verify(data: bytes) -> tuple[list[dict[str, Any]], str]:
     return records, previous
 
 
-def verify_journal(path: str | Path) -> list[dict[str, Any]]:
+def _validate_anchor(expected_count: int | None, expected_head_hash: str | None) -> None:
+    if (expected_count is None) != (expected_head_hash is None):
+        raise EvidenceError("Expected count and head hash must be supplied together")
+    if expected_count is None:
+        return
+    if type(expected_count) is not int or expected_count < 0:
+        raise EvidenceError("Expected count must be a nonnegative integer, not a boolean")
+    if (type(expected_head_hash) is not str or len(expected_head_hash) != 64
+            or any(character not in "0123456789abcdef" for character in expected_head_hash)):
+        raise EvidenceError("Expected head hash must contain exactly 64 lowercase hexadecimal characters")
+    if expected_count == 0 and expected_head_hash != _ZERO:
+        raise EvidenceError("An empty-journal anchor requires the all-zero genesis hash")
+
+
+def verify_journal(
+    path: str | Path, *, expected_count: int | None = None,
+    expected_head_hash: str | None = None,
+) -> list[dict[str, Any]]:
     """Read and verify every envelope, record contract, identity and chain link.
+
+    Supply both optional values to compare the complete journal with a retained
+    trusted snapshot. A legitimate later append also differs from that snapshot.
+    The caller must authenticate and preserve the anchor independently; values
+    read from this same journal are not an independent trust anchor.
 
     Does not create files, repair data, execute reproduction commands, or check
     whether observations are true. A missing file raises FileNotFoundError.
     """
-    return _verify(Path(path).read_bytes())[0]
+    _validate_anchor(expected_count, expected_head_hash)
+    records, head_hash = _verify(Path(path).read_bytes())
+    if expected_count is not None:
+        if len(records) != expected_count:
+            raise EvidenceError("Journal record count differs from the expected snapshot")
+        if head_hash != expected_head_hash:
+            raise EvidenceError("Journal head hash differs from the expected snapshot")
+    return records
 
 
 def _lock(stream: BinaryIO) -> None:
@@ -119,8 +148,11 @@ class EvidenceJournal:
     def __init__(self, path: str | Path):
         self.path = Path(path).absolute()
 
-    def verify(self) -> list[dict[str, Any]]:
-        return verify_journal(self.path)
+    def verify(
+        self, *, expected_count: int | None = None,
+        expected_head_hash: str | None = None,
+    ) -> list[dict[str, Any]]:
+        return verify_journal(self.path, expected_count=expected_count, expected_head_hash=expected_head_hash)
 
     def append(self, record: Mapping[str, Any], *, permit: Permit | None = None) -> str:
         if not isinstance(permit, Permit):

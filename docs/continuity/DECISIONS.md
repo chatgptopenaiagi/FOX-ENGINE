@@ -25,3 +25,6 @@
 9. Preserve failures found during development alongside later passing checks.
    Failure disappearance by itself is not proof of repair; retain regression
    tests and identify the changed cause.
+10. Add opt-in exact snapshot comparison to the journal verifier. Both retained
+    count and head hash are required; a later legitimate append also mismatches
+    an old anchor. Independent trust and storage remain the host's responsibility.

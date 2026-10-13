@@ -43,8 +43,8 @@ private API or undocumented hook is assumed. The adapter has no HTTP listener.
 
 | Integration | Status | Evidence required before claiming compatibility |
 | --- | --- | --- |
-| Generic Python SDK | VERIFIED for bounded local tests on Windows with Python 3.14 | Direct calls with valid and invalid synthetic fixtures; see continuity test evidence |
-| Generic JSON lines process | VERIFIED for bounded local tests on Windows with Python 3.14 | Local framing, error, and round-trip tests; see continuity test evidence |
+| Generic Python SDK | VERIFIED for bounded tests on Windows and Ubuntu with Python 3.11 and 3.14 | Direct calls with valid and invalid synthetic fixtures; see continuity test evidence |
+| Generic JSON lines process | VERIFIED for bounded tests on Windows and Ubuntu with Python 3.11 and 3.14 | Framing, error, and round-trip tests; see continuity test evidence |
 | OpenAI Codex CLI | DESIGNED | An authorized, documented host round trip on a named version |
 | Other OpenAI agents | DESIGNED | A separate integration test for each host |
 | Claude coding agents | DESIGNED | A documented host round trip on a named version |

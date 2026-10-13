@@ -15,3 +15,9 @@
 - Separate journal integrity, artifact-byte consistency and experimental truth.
   They require different verification and should never share an unqualified
   verified label.
+- Cross-version failures can be source defects even when the newest runtime
+  passes. The first remote matrix isolated eager annotation evaluation on
+  supported Python 3.11; postponing evaluation fixed the declared support range.
+- An exact journal anchor detects changed history relative to a trusted snapshot,
+  but it also rejects valid growth. A mismatch is evidence of difference, not
+  by itself evidence of an attack.

@@ -2,8 +2,9 @@
 
 All items below are DESIGNED or exploratory, not verified capabilities.
 
-- Add an optional trusted external journal anchor (final hash and record count)
-  to detect suffix truncation and wholesale replacement relative to that anchor.
+- Follow-up to the now implemented optional journal count/hash comparison:
+  design independently trusted anchor storage and authentication. Current tests
+  cover suffix truncation and recomputed replacement against host-supplied anchors.
 - Test simultaneous writers and abrupt interruption in controlled temporary
   workspaces. Do not silently repair torn journals; propose a new recovery artifact.
 - Build an MCP adapter only after protocol/version selection and conformance

@@ -1,14 +1,16 @@
 # Next executable action
 
-After the initial public checkpoint, inspect GitHub's `concept-validation`
-workflow for this exact commit. Verify all four Windows/Linux, Python 3.11/3.14
-jobs, preserve any failure and correct its cause within FOX. Record the run URL
-and commit identity only after GitHub confirms them.
+The foundation is published; the Python 3.11 import defect was corrected and the
+four-job matrix passed. Optional trusted count/hash journal comparisons have
+been implemented and locally verified. Confirm the newest exact-commit CI state
+from SESSION_CHECKPOINT and GitHub before claiming any newer cross-platform result.
 
-For the next engineering increment, add optional externally retained anchors to
-`verify_journal`: expected final hash and record count, strict input validation,
-suffix-truncation and recomputed-replacement regression fixtures. Keep existing
-unanchored integrity checking explicit. No automatic deletion or repair.
+The next engineering increment is bounded journal concurrency/crash validation.
+Create controlled temporary-workspace tests for two cooperating writers, lock
+contention, and interrupted append. Require valid single-writer behavior or an
+explicit nonmutating error. Retain torn-journal evidence. Document the actual
+atomicity guarantee and design recovery into a separate artifact, never a silent
+repair or deletion of historical evidence. Do not terminate unrelated processes.
 
 Resume by reading AGENTS, SESSION_CHECKPOINT, TEST_EVIDENCE and unfinished ideas;
 inspect `git status --short --branch`, remote URL and `git log -3 --oneline`.

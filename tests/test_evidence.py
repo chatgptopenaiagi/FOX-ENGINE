@@ -1,5 +1,6 @@
 """Failures and subsequent successes remain independent historical records."""
 
+from dataclasses import replace
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -156,6 +157,96 @@ class EvidenceTests(unittest.TestCase):
         self.path.write_text(json.dumps(entry) + "\n", encoding="utf-8")
         with self.assertRaises(EvidenceError):
             self.journal.verify()
+
+    def test_trusted_anchor_verifies_exact_nonempty_snapshot(self):
+        first = synthetic_record()
+        second = synthetic_record("corrected-run", 0)
+        self.append(first)
+        head_hash = self.append(second)
+        before = self.path.read_bytes()
+        for verifier in (
+            lambda **kwargs: verify_journal(self.path, **kwargs), self.journal.verify,
+        ):
+            with self.subTest(verifier=verifier):
+                self.assertEqual([first, second], verifier(expected_count=2, expected_head_hash=head_hash))
+                self.assertEqual([first, second], verifier())
+        self.assertEqual(before, self.path.read_bytes())
+
+    def test_empty_journal_anchor_uses_zero_count_and_genesis_hash(self):
+        self.path.write_bytes(b"")
+        self.assertEqual([], self.journal.verify(expected_count=0, expected_head_hash="0" * 64))
+        self.assertEqual([], verify_journal(self.path, expected_count=0, expected_head_hash="0" * 64))
+        self.assertEqual(b"", self.path.read_bytes())
+
+    def test_trusted_anchor_detects_suffix_and_complete_truncation(self):
+        self.append(synthetic_record())
+        first_line = self.path.read_bytes()
+        head_hash = self.append(synthetic_record("second", 0))
+        for truncated in (first_line, b""):
+            with self.subTest(truncated_count=bool(truncated)):
+                self.path.write_bytes(truncated)
+                # Internally consistent prefixes still pass unanchored checks.
+                self.assertEqual(int(bool(truncated)), len(verify_journal(self.path)))
+                with self.assertRaisesRegex(EvidenceError, "record count differs"):
+                    self.journal.verify(expected_count=2, expected_head_hash=head_hash)
+                self.assertEqual(truncated, self.path.read_bytes())
+
+    def test_trusted_anchor_detects_fully_recomputed_replacement(self):
+        self.append(synthetic_record())
+        head_hash = self.append(synthetic_record("second", 0))
+        replacement_path = self.root / "replacement.jsonl"
+        replacement_grant = replace(self.grant, path=str(replacement_path))
+        replacement_permit = self.shield.authorize(
+            Operation.WRITE_EVIDENCE, replacement_path,
+            resource="evidence-journal", grant=replacement_grant,
+        )
+        replacement_journal = EvidenceJournal(replacement_path)
+        changed_record = synthetic_record(exit_status=0)
+        changed_record["observed_condition"] = "Synthetic rewritten history; no longer the retained failure"
+        replacement_journal.append(changed_record, permit=replacement_permit)
+        replacement_journal.append(synthetic_record("second", 0), permit=replacement_permit)
+        replacement_bytes = replacement_path.read_bytes()
+        self.path.write_bytes(replacement_bytes)
+        self.assertEqual(changed_record, verify_journal(self.path)[0])
+        with self.assertRaisesRegex(EvidenceError, "head hash differs"):
+            verify_journal(self.path, expected_count=2, expected_head_hash=head_hash)
+        self.assertEqual(replacement_bytes, self.path.read_bytes())
+
+    def test_later_legitimate_append_requires_a_new_snapshot_anchor(self):
+        old_head_hash = self.append(synthetic_record())
+        new_head_hash = self.append(synthetic_record("second", 0))
+        with self.assertRaisesRegex(EvidenceError, "record count differs"):
+            self.journal.verify(expected_count=1, expected_head_hash=old_head_hash)
+        self.assertEqual(2, len(self.journal.verify(expected_count=2, expected_head_hash=new_head_hash)))
+
+    def test_malformed_anchor_arguments_are_rejected_before_io(self):
+        valid_hash = "a" * 64
+        cases = [
+            {"expected_count": 1}, {"expected_head_hash": valid_hash},
+            {"expected_count": True, "expected_head_hash": valid_hash},
+            {"expected_count": False, "expected_head_hash": "0" * 64},
+            {"expected_count": -1, "expected_head_hash": valid_hash},
+            {"expected_count": 1.0, "expected_head_hash": valid_hash},
+            {"expected_count": "1", "expected_head_hash": valid_hash},
+            {"expected_count": 1, "expected_head_hash": "A" * 64},
+            {"expected_count": 1, "expected_head_hash": "g" * 64},
+            {"expected_count": 1, "expected_head_hash": "a" * 63},
+            {"expected_count": 1, "expected_head_hash": "a" * 65},
+            {"expected_count": 1, "expected_head_hash": b"a" * 64},
+            {"expected_count": 0, "expected_head_hash": valid_hash},
+        ]
+        for verifier in (
+            lambda **kwargs: verify_journal(self.path, **kwargs), self.journal.verify,
+        ):
+            for arguments in cases:
+                with self.subTest(arguments=arguments), self.assertRaises(EvidenceError):
+                    verifier(**arguments)
+        self.assertFalse(self.path.exists())
+
+    def test_valid_anchor_does_not_create_a_missing_journal(self):
+        with self.assertRaises(FileNotFoundError):
+            self.journal.verify(expected_count=0, expected_head_hash="0" * 64)
+        self.assertFalse(self.path.exists())
 
 
 if __name__ == "__main__":
