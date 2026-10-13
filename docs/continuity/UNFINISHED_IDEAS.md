@@ -1,6 +1,7 @@
 # Unfinished ideas
 
-All items below are DESIGNED or exploratory, not verified capabilities.
+Remaining items below are DESIGNED or exploratory, not verified capabilities;
+the first item explicitly identifies its completed prerequisite.
 
 - Follow-up to the now implemented optional journal count/hash comparison:
   design independently trusted anchor storage and authentication. Current tests

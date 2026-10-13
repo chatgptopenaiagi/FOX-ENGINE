@@ -99,3 +99,18 @@ files, scanned their exact contents, reviewed synthetic/provenance constraints,
 and found no remaining secret/personal-data findings. GitHub confirmed PUBLIC
 visibility and the exact foundation and portability commit identities; ordinary
 pushes only, no release/tag publication. Later checkpoints repeat staged review.
+
+## Anchor increment remote verification and preservation
+
+[Run 38368670971](https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368670971)
+at commit `10520affdec6c708470c7dc473a21bef961c6dca` passed all four jobs,
+each with **70 tests, 0 failures, 0 skips**. Windows/Ubuntu and Python 3.11/3.14
+schema checks, package builds, installs and SDK smoke checks succeeded.
+GitHub's API and Git remote refs confirmed that exact public main commit.
+
+The final continuity-only checkpoint records this verified implementation commit.
+Its own enclosing Git commit is resolved with `git log -1 --
+docs/continuity/SESSION_CHECKPOINT.json`; embedding a file's enclosing commit hash
+inside itself would be circular. The final report separately identifies the
+actual pushed HEAD. No unfinished source changes are intentionally left outside
+Git; local raw validation logs and build products remain ignored.

@@ -2,8 +2,9 @@
 
 The foundation is published; the Python 3.11 import defect was corrected and the
 four-job matrix passed. Optional trusted count/hash journal comparisons have
-been implemented and locally verified. Confirm the newest exact-commit CI state
-from SESSION_CHECKPOINT and GitHub before claiming any newer cross-platform result.
+been implemented and verified in the full four-job matrix (70 tests per job).
+Confirm the newest exact-commit state from SESSION_CHECKPOINT and GitHub when
+resuming; do not infer results for later changes.
 
 The next engineering increment is bounded journal concurrency/crash validation.
 Create controlled temporary-workspace tests for two cooperating writers, lock

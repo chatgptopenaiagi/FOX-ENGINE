@@ -1,11 +1,11 @@
 {
   "checkpoint_version": "1.0",
-  "recorded_at": "2026-10-13T08:20:49.359017+00:00",
+  "recorded_at": "2026-10-13T08:22:46.211472+00:00",
   "project": "FOX-ENGINE",
   "concept_version": "0.1.0-concept",
-  "current_git_commit": "1226385bc13ec8d6c5928fb235c373c0de1de771",
-  "commit_note": "Verified portability source commit; this subsequent checkpoint adds anchored journal verification. Resolve the enclosing checkpoint commit with git log -1 -- docs/continuity/SESSION_CHECKPOINT.json.",
-  "active_development_phase": "PHASE_7_ANCHORED_JOURNAL_INCREMENT",
+  "current_git_commit": "10520affdec6c708470c7dc473a21bef961c6dca",
+  "commit_note": "Exact verified implementation commit captured before this continuity-only commit. Resolve the enclosing checkpoint commit with git log -1 -- docs/continuity/SESSION_CHECKPOINT.json; a file cannot embed its own enclosing commit hash.",
+  "active_development_phase": "CONCEPT_FOUNDATION_AND_ANCHOR_INCREMENT_VERIFIED",
   "phase_status": {
     "0": {
       "status": "VERIFIED",
@@ -29,7 +29,7 @@
     },
     "5": {
       "status": "VERIFIED",
-      "scope": "Bounded Windows authority and journal tests; not an OS sandbox"
+      "scope": "Bounded Windows/Ubuntu authority, journal and anchor tests on Python3.11/3.14; not an OS sandbox"
     },
     "6": {
       "status": "VERIFIED",
@@ -41,7 +41,7 @@
     },
     "8": {
       "status": "VERIFIED",
-      "scope": "Public foundation and corrected four-job Windows/Ubuntu Python3.11/3.14 CI confirmed"
+      "scope": "Public MIT checkpoint, exact remote source SHA and four-job 70-test CI matrix confirmed"
     }
   },
   "completed_work": [
@@ -55,7 +55,6 @@
     "Optional trusted journal count/hash snapshot verification"
   ],
   "incomplete_work": [
-    "Anchor-increment cross-platform CI confirmation",
     "Journal concurrency/crash validation",
     "Independently authenticated anchor storage",
     "Per-agent compatibility",
@@ -69,7 +68,15 @@
     "failed": 0,
     "skipped": 0,
     "schema_exports_checked": 8,
-    "anchor_tests": 7
+    "anchor_tests": 7,
+    "remote_matrix": [
+      "Windows Python3.11",
+      "Windows Python3.14",
+      "Ubuntu Python3.11",
+      "Ubuntu Python3.14"
+    ],
+    "remote_tests_per_job": 70,
+    "remote_skipped_per_job": 0
   },
   "failed_tests": [
     "Historical intermediate suite: 55 tests, 2 ContractError assertions failed; corrected with retained regression tests",
@@ -92,14 +99,14 @@
     "Passing later means solved",
     "Validator rejection necessarily means validator defect"
   ],
-  "next_executable_task": "Confirm anchor increment CI, then add bounded journal concurrency and interrupted-append tests in temporary FOX workspaces.",
+  "next_executable_task": "Add bounded two-writer lock-contention and interrupted-append journal tests in temporary FOX workspaces; retain torn evidence and document atomicity before designing recovery.",
   "remaining_external_blockers": [],
   "publication": {
     "target": "https://github.com/chatgptopenaiagi/FOX-ENGINE",
     "status": "PUBLIC_PUSH_CONFIRMED",
-    "verified_commit": "1226385bc13ec8d6c5928fb235c373c0de1de771",
-    "ci_run": "https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368299656",
-    "ci_conclusion": "success: all four jobs, 63 tests each, no skips"
+    "verified_commit": "10520affdec6c708470c7dc473a21bef961c6dca",
+    "ci_run": "https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368670971",
+    "ci_conclusion": "success: all four jobs, 70 tests each, no skips"
   },
   "usage_monitoring": {
     "verified_account_usage_available": false,
