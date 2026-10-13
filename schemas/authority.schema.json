@@ -1,0 +1,59 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/authority.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "expires_at": {
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "type": "string"
+    },
+    "grant_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "not_before": {
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "type": "string"
+    },
+    "operation": {
+      "enum": [
+        "ANALYZE",
+        "READ_EVIDENCE",
+        "WRITE_EVIDENCE",
+        "CREATE_FILE",
+        "MODIFY_FILE",
+        "EXECUTE_TEST",
+        "CREATE_PROCESS",
+        "INSTALL_DEPENDENCY",
+        "READ_CREDENTIALS",
+        "DELETE",
+        "MODIFY_SECURITY",
+        "ADMINISTER_ACCOUNT",
+        "PRIVILEGED_COMMAND",
+        "EXPOSE_NETWORK",
+        "PUBLISH",
+        "MODIFY_PROTECTED_INSTALLATION"
+      ]
+    },
+    "path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "resource": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "grant_id",
+    "operation",
+    "path",
+    "resource",
+    "not_before",
+    "expires_at"
+  ],
+  "title": "FOX authority contract 1.0",
+  "type": "object"
+}

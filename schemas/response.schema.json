@@ -1,0 +1,86 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/response.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "error": {
+          "type": "null"
+        },
+        "ok": {
+          "const": true
+        },
+        "result": {
+          "type": [
+            "object",
+            "array"
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "error": {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "const": "INVALID_REQUEST"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "type": "object"
+        },
+        "ok": {
+          "const": false
+        },
+        "result": {
+          "type": "null"
+        }
+      }
+    }
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "request_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "result": {
+      "type": [
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "request_id",
+    "ok",
+    "result",
+    "error"
+  ],
+  "title": "FOX response contract 1.0",
+  "type": "object"
+}

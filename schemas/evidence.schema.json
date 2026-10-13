@@ -1,0 +1,120 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/evidence.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_hashes": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "command_summary": {
+      "type": "string"
+    },
+    "confidence_qualification": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "decision_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "environment": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "exit_status": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "hypothesis_links": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "hypothesis_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+            "type": "string"
+          },
+          "relation": {
+            "enum": [
+              "SUPPORTS",
+              "CONTRADICTS",
+              "CONTEXT"
+            ]
+          }
+        },
+        "required": [
+          "hypothesis_id",
+          "relation"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "observed_condition": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "record_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "reproduction_steps": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": false
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:[0-5]\\d(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$",
+      "type": "string"
+    },
+    "tool_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "record_id",
+    "project_id",
+    "timestamp",
+    "observed_condition",
+    "source",
+    "tool_id",
+    "artifact_hashes",
+    "command_summary",
+    "exit_status",
+    "hypothesis_links",
+    "decision_ids",
+    "confidence_qualification",
+    "environment",
+    "reproduction_steps"
+  ],
+  "title": "FOX evidence contract 1.0",
+  "type": "object"
+}

@@ -1,0 +1,65 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/engineering_problem.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "constraints": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "description": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "desired_outcome": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "domain": {
+      "enum": [
+        "unknown",
+        "validation",
+        "environment",
+        "software",
+        "architecture",
+        "coordination",
+        "recovery",
+        "dependency",
+        "requirements"
+      ]
+    },
+    "problem_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "problem_id",
+    "project_id",
+    "description",
+    "domain",
+    "assumptions",
+    "constraints",
+    "desired_outcome"
+  ],
+  "title": "FOX engineering_problem contract 1.0",
+  "type": "object"
+}

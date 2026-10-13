@@ -1,0 +1,31 @@
+{
+  "checkpoint_version": "1.0",
+  "recorded_at": "2026-10-13T08:11:58Z",
+  "project": "FOX-ENGINE",
+  "concept_version": "0.1.0-concept",
+  "current_git_commit": null,
+  "commit_note": "Initial precommit checkpoint. Later checkpoints record the verified source commit; a file cannot contain its own enclosing commit hash.",
+  "active_development_phase": "PHASE_8_INITIAL_PUBLICATION",
+  "phase_status": {
+    "0": {"status": "IMPLEMENTED", "scope": "Independent MIT repository foundation and continuity"},
+    "1": {"status": "VERIFIED", "scope": "Local strict contracts and eight exported schemas; bounded positive/negative parity tests"},
+    "2": {"status": "VERIFIED", "scope": "Local deterministic decisions, revision, reconstruction and hypothesis tests"},
+    "3": {"status": "VERIFIED", "scope": "Eight registry records and data-only extension tests"},
+    "4": {"status": "VERIFIED", "scope": "Two revisable templates and structural candidate comparison; suitability unverified"},
+    "5": {"status": "VERIFIED", "scope": "Bounded Windows authority and journal tests; not an OS sandbox"},
+    "6": {"status": "VERIFIED", "scope": "Local Python SDK and JSONL transport only; external agents DESIGNED"},
+    "7": {"status": "VERIFIED", "scope": "Synthetic scenarios and adversarial regression tests"},
+    "8": {"status": "IMPLEMENTED", "scope": "CI and publication gates prepared; public push and remote CI pending"}
+  },
+  "completed_work": ["Deterministic offline engine", "Evidence journal and authority checker", "Strategy registry", "Architecture proposals", "Python SDK and JSONL CLI", "Synthetic examples", "MIT documentation and continuity"],
+  "incomplete_work": ["Remote publication confirmation", "Cross-platform CI confirmation", "External journal anchors", "Per-agent compatibility", "MCP adapter", "Comparative benchmarks"],
+  "verified_tests": {"command": "PYTHONPATH=src python -m unittest discover -s tests -v", "environment": "Windows CPython 3.14.7 with pinned development dependencies", "passed": 63, "failed": 0, "skipped": 0, "schema_exports_checked": 8},
+  "failed_tests": ["Historical intermediate suite: 55 tests, 2 ContractError assertions failed; corrected with retained regression tests", "Initial multiline JSONL fixture rejected", "PowerShell Raw pipeline extra blank line rejected"],
+  "unresolved_problems": ["No empirical engineering-outcome benchmark", "No authenticated evidence provenance or hostile-filesystem sandbox"],
+  "architectural_discoveries": ["Decision identity must bind problem requirements", "Historical hypothesis citations need preservation", "Authorization flags require schema invariants", "Correct validators expose fixture-format defects"],
+  "rejected_hypotheses": ["Hashes alone make evidence immutable", "Passing later means solved", "Validator rejection necessarily means validator defect"],
+  "next_executable_task": "Confirm initial public push and inspect exact-commit CI results; preserve any failures and corrections.",
+  "remaining_external_blockers": [],
+  "publication": {"target": "https://github.com/chatgptopenaiagi/FOX-ENGINE", "status": "PENDING_REVIEW_AND_PUSH"},
+  "usage_monitoring": {"verified_account_usage_available": false, "remaining_percent": null, "strategy": "Checkpoints at completed work and session boundaries"}
+}

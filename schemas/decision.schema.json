@@ -1,0 +1,439 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/decision.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "decision_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "domain": {
+      "enum": [
+        "unknown",
+        "validation",
+        "environment",
+        "software",
+        "architecture",
+        "coordination",
+        "recovery",
+        "dependency",
+        "requirements"
+      ]
+    },
+    "evidence_digest": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "evidence_hashes": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "evidence_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "hypotheses": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "IMPLEMENTATION_DEFECT",
+              "INVALID_INPUT",
+              "CORRECT_VALIDATOR",
+              "INCORRECT_TEST",
+              "INCOMPATIBLE_ENVIRONMENT",
+              "DEPENDENCY_BEHAVIOR",
+              "INCOMPLETE_EVIDENCE",
+              "INCONSISTENT_REQUIREMENT"
+            ]
+          },
+          "evidence_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+              "type": "string"
+            },
+            "minItems": 0,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "falsification_test": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hypothesis_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+            "type": "string"
+          },
+          "project_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+            "type": "string"
+          },
+          "statement": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "HYPOTHESIS",
+              "REJECTED_HYPOTHESIS",
+              "VERIFIED_CONCLUSION",
+              "UNRESOLVED"
+            ]
+          }
+        },
+        "required": [
+          "hypothesis_id",
+          "project_id",
+          "statement",
+          "category",
+          "status",
+          "evidence_ids",
+          "falsification_test"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": false
+    },
+    "previous_decision_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "principles": {
+      "const": [
+        "RECONSTRUCT_DECISIONS",
+        "CHALLENGE_ASSUMPTIONS",
+        "DISTINGUISH_FAILURE_ORIGINS",
+        "PRESERVE_CONTRADICTIONS",
+        "REVISE_FROM_OBSERVATIONS"
+      ]
+    },
+    "problem": {
+      "additionalProperties": false,
+      "properties": {
+        "assumptions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 0,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "constraints": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 0,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "description": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "desired_outcome": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "unknown",
+            "validation",
+            "environment",
+            "software",
+            "architecture",
+            "coordination",
+            "recovery",
+            "dependency",
+            "requirements"
+          ]
+        },
+        "problem_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+          "type": "string"
+        },
+        "project_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "problem_id",
+        "project_id",
+        "description",
+        "domain",
+        "assumptions",
+        "constraints",
+        "desired_outcome"
+      ],
+      "type": "object"
+    },
+    "problem_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "recommendations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actions": {
+            "items": {
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "properties": {
+                    "operation": {
+                      "const": "TEST_EXECUTION"
+                    },
+                    "requires_authorization": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "operation": {
+                      "const": "READ_ONLY_ANALYSIS"
+                    },
+                    "requires_authorization": {
+                      "const": false
+                    }
+                  }
+                }
+              ],
+              "properties": {
+                "action_id": {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+                  "type": "string"
+                },
+                "completion_criteria": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "description": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "items": {
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+                    "type": "string"
+                  },
+                  "minItems": 0,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "operation": {
+                  "enum": [
+                    "READ_ONLY_ANALYSIS",
+                    "TEST_EXECUTION"
+                  ]
+                },
+                "requires_authorization": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "action_id",
+                "description",
+                "operation",
+                "requires_authorization",
+                "completion_criteria",
+                "evidence_ids"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": false
+          },
+          "cost_estimate": {
+            "additionalProperties": false,
+            "properties": {
+              "basis": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "effort": {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH"
+                ]
+              }
+            },
+            "required": [
+              "effort",
+              "basis"
+            ],
+            "type": "object"
+          },
+          "expected_outcomes": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 0,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "rationale": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "strategy_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "strategy_id",
+          "rationale",
+          "expected_outcomes",
+          "cost_estimate",
+          "actions"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": false
+    },
+    "revisions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+              "type": "string"
+            },
+            "minItems": 0,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "hypothesis_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+            "type": "string"
+          },
+          "new_status": {
+            "enum": [
+              "HYPOTHESIS",
+              "REJECTED_HYPOTHESIS",
+              "VERIFIED_CONCLUSION",
+              "UNRESOLVED"
+            ]
+          },
+          "previous_status": {
+            "enum": [
+              "HYPOTHESIS",
+              "REJECTED_HYPOTHESIS",
+              "VERIFIED_CONCLUSION",
+              "UNRESOLVED"
+            ]
+          }
+        },
+        "required": [
+          "hypothesis_id",
+          "previous_status",
+          "new_status",
+          "evidence_ids"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": false
+    },
+    "statements": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+              "type": "string"
+            },
+            "minItems": 0,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "kind": {
+            "enum": [
+              "OBSERVED_FACT",
+              "HYPOTHESIS",
+              "ASSUMPTION",
+              "PROPOSAL",
+              "REJECTED_HYPOTHESIS",
+              "VERIFIED_CONCLUSION",
+              "UNRESOLVED"
+            ]
+          },
+          "text": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "text",
+          "evidence_ids"
+        ],
+        "type": "object"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": false
+    },
+    "unresolved": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "contract_version",
+    "decision_id",
+    "project_id",
+    "problem_id",
+    "domain",
+    "problem",
+    "principles",
+    "statements",
+    "hypotheses",
+    "recommendations",
+    "evidence_ids",
+    "evidence_digest",
+    "evidence_hashes",
+    "previous_decision_id",
+    "revisions",
+    "unresolved"
+  ],
+  "title": "FOX decision contract 1.0",
+  "type": "object"
+}

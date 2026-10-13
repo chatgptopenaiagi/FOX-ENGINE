@@ -1,0 +1,63 @@
+{
+  "$id": "https://github.com/chatgptopenaiagi/FOX-ENGINE/schemas/hypothesis.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "enum": [
+        "IMPLEMENTATION_DEFECT",
+        "INVALID_INPUT",
+        "CORRECT_VALIDATOR",
+        "INCORRECT_TEST",
+        "INCOMPATIBLE_ENVIRONMENT",
+        "DEPENDENCY_BEHAVIOR",
+        "INCOMPLETE_EVIDENCE",
+        "INCONSISTENT_REQUIREMENT"
+      ]
+    },
+    "evidence_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+        "type": "string"
+      },
+      "minItems": 0,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "falsification_test": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "hypothesis_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "project_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+      "type": "string"
+    },
+    "statement": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "HYPOTHESIS",
+        "REJECTED_HYPOTHESIS",
+        "VERIFIED_CONCLUSION",
+        "UNRESOLVED"
+      ]
+    }
+  },
+  "required": [
+    "hypothesis_id",
+    "project_id",
+    "statement",
+    "category",
+    "status",
+    "evidence_ids",
+    "falsification_test"
+  ],
+  "title": "FOX hypothesis contract 1.0",
+  "type": "object"
+}

@@ -1,0 +1,19 @@
+{
+  "rejected": [
+    {"run_id": "rejected-01", "command": ["synthetic-check", "diagnostic-01"], "inline_program": "inert-marker-01"},
+    {"run_id": "rejected-02", "command": ["synthetic-check", "diagnostic-02"], "inline_program": "inert-marker-02"},
+    {"run_id": "rejected-03", "command": ["synthetic-check", "diagnostic-03"], "inline_program": "inert-marker-03"},
+    {"run_id": "rejected-04", "command": ["synthetic-check", "diagnostic-04"], "inline_program": "inert-marker-04"},
+    {"run_id": "rejected-05", "command": ["synthetic-check", "diagnostic-05"], "inline_program": "inert-marker-05"},
+    {"run_id": "rejected-06", "command": ["synthetic-check", "diagnostic-06"], "inline_program": "inert-marker-06"}
+  ],
+  "corrected": [
+    {"run_id": "corrected-01", "command": ["synthetic-check", "--program-file", "diagnostic-01.txt"]},
+    {"run_id": "corrected-02", "command": ["synthetic-check", "--program-file", "diagnostic-02.txt"]},
+    {"run_id": "corrected-03", "command": ["synthetic-check", "--program-file", "diagnostic-03.txt"]},
+    {"run_id": "corrected-04", "command": ["synthetic-check", "--program-file", "diagnostic-04.txt"]},
+    {"run_id": "corrected-05", "command": ["synthetic-check", "--program-file", "diagnostic-05.txt"]},
+    {"run_id": "corrected-06", "command": ["synthetic-check", "--program-file", "diagnostic-06.txt"]}
+  ],
+  "control": {"run_id": "valid-control", "command": ["synthetic-check", "--fixture", "valid-control"]}
+}
