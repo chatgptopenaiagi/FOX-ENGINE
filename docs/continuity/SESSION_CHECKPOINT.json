@@ -1,31 +1,106 @@
 {
   "checkpoint_version": "1.0",
-  "recorded_at": "2026-10-13T08:11:58Z",
+  "recorded_at": "2026-10-13T08:17:49.514496+00:00",
   "project": "FOX-ENGINE",
   "concept_version": "0.1.0-concept",
-  "current_git_commit": null,
-  "commit_note": "Initial precommit checkpoint. Later checkpoints record the verified source commit; a file cannot contain its own enclosing commit hash.",
-  "active_development_phase": "PHASE_8_INITIAL_PUBLICATION",
+  "current_git_commit": "c3803f08d863f16bad70bfeaf5ff2e77d3b8f4a6",
+  "commit_note": "Verified foundation source commit. This checkpoint is committed in a subsequent portability correction; resolve its enclosing commit with git log -1 -- docs/continuity/SESSION_CHECKPOINT.json.",
+  "active_development_phase": "PHASE_8_PORTABILITY_CORRECTION",
   "phase_status": {
-    "0": {"status": "IMPLEMENTED", "scope": "Independent MIT repository foundation and continuity"},
-    "1": {"status": "VERIFIED", "scope": "Local strict contracts and eight exported schemas; bounded positive/negative parity tests"},
-    "2": {"status": "VERIFIED", "scope": "Local deterministic decisions, revision, reconstruction and hypothesis tests"},
-    "3": {"status": "VERIFIED", "scope": "Eight registry records and data-only extension tests"},
-    "4": {"status": "VERIFIED", "scope": "Two revisable templates and structural candidate comparison; suitability unverified"},
-    "5": {"status": "VERIFIED", "scope": "Bounded Windows authority and journal tests; not an OS sandbox"},
-    "6": {"status": "VERIFIED", "scope": "Local Python SDK and JSONL transport only; external agents DESIGNED"},
-    "7": {"status": "VERIFIED", "scope": "Synthetic scenarios and adversarial regression tests"},
-    "8": {"status": "IMPLEMENTED", "scope": "CI and publication gates prepared; public push and remote CI pending"}
+    "0": {
+      "status": "VERIFIED",
+      "scope": "Public independent MIT repository foundation"
+    },
+    "1": {
+      "status": "VERIFIED",
+      "scope": "Local strict contracts and eight exported schemas; bounded positive/negative parity tests"
+    },
+    "2": {
+      "status": "VERIFIED",
+      "scope": "Local deterministic decisions, revision, reconstruction and hypothesis tests"
+    },
+    "3": {
+      "status": "VERIFIED",
+      "scope": "Eight registry records and data-only extension tests"
+    },
+    "4": {
+      "status": "VERIFIED",
+      "scope": "Two revisable templates and structural candidate comparison; suitability unverified"
+    },
+    "5": {
+      "status": "VERIFIED",
+      "scope": "Bounded Windows authority and journal tests; not an OS sandbox"
+    },
+    "6": {
+      "status": "VERIFIED",
+      "scope": "Local Python SDK and JSONL transport only; external agents DESIGNED"
+    },
+    "7": {
+      "status": "VERIFIED",
+      "scope": "Synthetic scenarios and adversarial regression tests"
+    },
+    "8": {
+      "status": "TESTED",
+      "scope": "Initial push confirmed; remote Python3.14 jobs pass, Python3.11 import defect corrected locally pending remote verification"
+    }
   },
-  "completed_work": ["Deterministic offline engine", "Evidence journal and authority checker", "Strategy registry", "Architecture proposals", "Python SDK and JSONL CLI", "Synthetic examples", "MIT documentation and continuity"],
-  "incomplete_work": ["Remote publication confirmation", "Cross-platform CI confirmation", "External journal anchors", "Per-agent compatibility", "MCP adapter", "Comparative benchmarks"],
-  "verified_tests": {"command": "PYTHONPATH=src python -m unittest discover -s tests -v", "environment": "Windows CPython 3.14.7 with pinned development dependencies", "passed": 63, "failed": 0, "skipped": 0, "schema_exports_checked": 8},
-  "failed_tests": ["Historical intermediate suite: 55 tests, 2 ContractError assertions failed; corrected with retained regression tests", "Initial multiline JSONL fixture rejected", "PowerShell Raw pipeline extra blank line rejected"],
-  "unresolved_problems": ["No empirical engineering-outcome benchmark", "No authenticated evidence provenance or hostile-filesystem sandbox"],
-  "architectural_discoveries": ["Decision identity must bind problem requirements", "Historical hypothesis citations need preservation", "Authorization flags require schema invariants", "Correct validators expose fixture-format defects"],
-  "rejected_hypotheses": ["Hashes alone make evidence immutable", "Passing later means solved", "Validator rejection necessarily means validator defect"],
-  "next_executable_task": "Confirm initial public push and inspect exact-commit CI results; preserve any failures and corrections.",
+  "completed_work": [
+    "Deterministic offline engine",
+    "Evidence journal and authority checker",
+    "Strategy registry",
+    "Architecture proposals",
+    "Python SDK and JSONL CLI",
+    "Synthetic examples",
+    "MIT documentation and continuity"
+  ],
+  "incomplete_work": [
+    "Cross-platform CI confirmation",
+    "External journal anchors",
+    "Per-agent compatibility",
+    "MCP adapter",
+    "Comparative benchmarks"
+  ],
+  "verified_tests": {
+    "command": "PYTHONPATH=src python -m unittest discover -s tests -v",
+    "environment": "Windows CPython 3.14.7 with pinned development dependencies",
+    "passed": 63,
+    "failed": 0,
+    "skipped": 0,
+    "schema_exports_checked": 8
+  },
+  "failed_tests": [
+    "Historical intermediate suite: 55 tests, 2 ContractError assertions failed; corrected with retained regression tests",
+    "Initial multiline JSONL fixture rejected",
+    "PowerShell Raw pipeline extra blank line rejected",
+    "Initial remote CI Python3.11 import fails from eager annotation shadowing; retained public run 38368028648"
+  ],
+  "unresolved_problems": [
+    "No empirical engineering-outcome benchmark",
+    "No authenticated evidence provenance or hostile-filesystem sandbox"
+  ],
+  "architectural_discoveries": [
+    "Decision identity must bind problem requirements",
+    "Historical hypothesis citations need preservation",
+    "Authorization flags require schema invariants",
+    "Correct validators expose fixture-format defects"
+  ],
+  "rejected_hypotheses": [
+    "Hashes alone make evidence immutable",
+    "Passing later means solved",
+    "Validator rejection necessarily means validator defect"
+  ],
+  "next_executable_task": "Verify corrected Python3.11 CI; complete optional trusted journal anchors and checkpoint.",
   "remaining_external_blockers": [],
-  "publication": {"target": "https://github.com/chatgptopenaiagi/FOX-ENGINE", "status": "PENDING_REVIEW_AND_PUSH"},
-  "usage_monitoring": {"verified_account_usage_available": false, "remaining_percent": null, "strategy": "Checkpoints at completed work and session boundaries"}
+  "publication": {
+    "target": "https://github.com/chatgptopenaiagi/FOX-ENGINE",
+    "status": "PUBLIC_PUSH_CONFIRMED",
+    "verified_commit": "c3803f08d863f16bad70bfeaf5ff2e77d3b8f4a6",
+    "ci_run": "https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368028648",
+    "ci_conclusion": "failure: both Python3.11 jobs, both Python3.14 jobs passed"
+  },
+  "usage_monitoring": {
+    "verified_account_usage_available": false,
+    "remaining_percent": null,
+    "strategy": "Checkpoints at completed work and session boundaries"
+  }
 }

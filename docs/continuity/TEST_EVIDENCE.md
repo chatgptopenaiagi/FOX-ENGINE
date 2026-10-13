@@ -62,3 +62,18 @@ the self-match; no file or finding category was exempted.
 These tests verify bounded behavior, not production security, truth of supplied
 observations, real CAE outcomes, real-agent integrations, or improved engineering
 performance. Remote CI results are recorded only after GitHub confirms them.
+
+## Initial remote CI: preserved portability defect
+
+[Run 38368028648](https://github.com/chatgptopenaiagi/FOX-ENGINE/actions/runs/38368028648)
+tested foundation commit `c3803f08d863f16bad70bfeaf5ff2e77d3b8f4a6`.
+Windows/Python 3.14 and Ubuntu/Python 3.14 passed. Both Python 3.11 jobs failed
+during import before schema checking or tests, with
+`TypeError: 'function' object is not subscriptable` in StrategyRegistry.select's
+return annotation. The earlier class method named `list` shadowed the built-in
+under Python 3.11's eager annotation evaluation. This is a FOX portability defect
+within its declared support range, not an unsupported environment.
+
+Correction: postpone annotation evaluation in the strategies module. The original
+failed run remains public. A later passing 3.11 run is required to verify this
+correction; local Python 3.14 success alone is insufficient.

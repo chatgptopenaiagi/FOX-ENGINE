@@ -1,5 +1,7 @@
 """Data-only engineering strategies; importing a module never runs a tactic."""
 
+from __future__ import annotations
+
 from copy import deepcopy
 from collections.abc import Iterable, Mapping
 from typing import Any
